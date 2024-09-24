@@ -1,10 +1,10 @@
-import express from "express";
-import mongoose from "mongoose";
-import dotenv from "dotenv";
+const express = require("express");
+const mongoose = require("mongoose");
+const dotenv = require("dotenv");
+const cookieParser = require("cookie-parser");
+const cors = require("cors");
 
-import cookieParser from "cookie-parser";
-import cors from "cors";
-
+// Create an express app
 const app = express();
 app.use(express.json());
 app.use(cookieParser());
@@ -14,8 +14,11 @@ app.use(
     credentials: true,
   })
 );
+
+// Load environment variables
 dotenv.config();
-//db connection
+
+// Database connection
 const connectDB = async () => {
   try {
     await mongoose.connect("mongodb://localhost:27017/library");
@@ -25,10 +28,18 @@ const connectDB = async () => {
   }
 };
 
+// Define your routes here
+const roleRoute = require("./routes/role"); // Add your route files
+const authRoute = require("./routes/auth");
+const userRoute = require("./routes/user");
+const bookRoute = require("./routes/book");
+
 app.use("/api/role", roleRoute);
 app.use("/api/auth", authRoute);
 app.use("/api/user", userRoute);
-//error handler middleware
+app.use("/api/book", bookRoute);
+
+// Error handler middleware
 app.use((err, req, res, next) => {
   const statusCode = err.status || 500;
   const errorMessage = err.message || "Something went wrong";
@@ -39,7 +50,7 @@ app.use((err, req, res, next) => {
   });
 });
 
-//response handlesr
+// Response handler middleware
 app.use((obj, req, res, next) => {
   const statusCode = obj.status || 500;
   const message = obj.message || "Something went wrong";
@@ -51,7 +62,8 @@ app.use((obj, req, res, next) => {
   });
 });
 
+// Start the server
 app.listen(8000, () => {
   connectDB();
-  console.log("connected");
+  console.log("Server running on port 8000");
 });

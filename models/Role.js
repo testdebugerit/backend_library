@@ -1,6 +1,6 @@
-import mongoose from "mongoose";
+const mongoose = require("mongoose");
 
-const RoleSchema = mongoose.Schema(
+const RoleSchema = new mongoose.Schema(
   {
     role: {
       type: String,
@@ -8,7 +8,8 @@ const RoleSchema = mongoose.Schema(
     },
   },
   {
-    timestamp: true,
+    timestamps: true, // Fixing typo from 'timestamp' to 'timestamps'
   }
 );
-export default mongoose.model("Role", RoleSchema);
+
+module.exports = mongoose.model("Role", RoleSchema);
