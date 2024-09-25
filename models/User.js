@@ -1,6 +1,7 @@
-import mongoose, { Schema } from "mongoose";
+const mongoose = require("mongoose");
+const { Schema } = mongoose;
 
-const UserSchema = mongoose.Schema(
+const UserSchema = new Schema(
   {
     firstName: {
       type: String,
@@ -28,13 +29,14 @@ const UserSchema = mongoose.Schema(
       type: Boolean,
       default: false,
     },
-    //role
+    // role
     roles: {
       type: [Schema.Types.ObjectId],
       required: true,
       ref: "Role",
     },
   },
-  { timestamp: true }
+  { timestamps: true }
 );
-export default mongoose.model("User", UserSchema);
+
+module.exports = mongoose.model("User", UserSchema);

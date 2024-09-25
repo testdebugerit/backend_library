@@ -1,6 +1,6 @@
-import Book from "../models/Book.js";
-import { CreateError } from "../utils/error.js";
-import { CreateSuccess } from "../utils/success.js";
+const Book = require("../models/Book.js");
+const { CreateError } = require("../utils/error.js");
+const { CreateSuccess } = require("../utils/success.js");
 
 export const getBooks = async (req, res, next) => {
   try {

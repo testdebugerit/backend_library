@@ -1,11 +1,11 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   login,
   register,
   registerAdmin,
   resetPassword,
   sendEmail,
-} from "../controllers/auth.controller.js";
+} = require("../controllers/auth.controller.js");
 
 const router = express.Router();
 
@@ -19,9 +19,9 @@ router.post("/login", login);
 router.post("/register-admin", registerAdmin);
 
 //send reset email
-
 router.post("/send-email", sendEmail);
 
-//send reset email
-router.post("reset-password", resetPassword);
-export default router;
+//reset password
+router.post("/reset-password", resetPassword);
+
+module.exports = router;

@@ -1,11 +1,11 @@
-import Role from "../models/Role.js";
-import User from "../models/User.js";
-import bcrypt from "bcryptjs";
-import jwt from "jsonwebtoken";
-import { CreateSuccess } from "../utils/success.js";
-import { CreateError } from "../utils/error.js";
-import nodemailer from "nodemailer";
-import UserToken from "../models/UserToken.js";
+// const Role = require("../models/Role.js");
+const User = require("../models/User.js");
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { CreateSuccess } = require("../utils/success.js");
+const { CreateError } = require("../utils/error.js");
+const nodemailer = require("nodemailer");
+const UserToken = require("../models/UserToken.js");
 
 export const register = async (req, res, next) => {
   const role = await Role.find({ role: "User" });
@@ -79,7 +79,7 @@ export const sendEmail = async (req, res, next) => {
     email: { $regex: "^" + email + "$", $options: "i" },
   });
   if (!user) {
-    return next(CreateError(404, "User not found to rest the email!"));
+    return next(CreateError(404, "User not found to reset the email!"));
   }
   const payload = {
     email: user.email,

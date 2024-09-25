@@ -1,16 +1,18 @@
-import BookJson from "./Bookstore.books.json" assert { type: "json" };
-import Book from "./models/Book.js";
+const BookJson = require("./Bookstore.books.json");
+const Book = require("./models/Book.js");
 
-export const seedBooksData = async () => {
+const seedBooksData = async () => {
   try {
-    //connection to the database
-    //query
+    // connection to the database
+    // query
     await Book.deleteMany({});
     await Book.insertMany(BookJson);
     console.log("Data seeded successfully");
 
-    //dicsonnect
+    // disconnect
   } catch (error) {
     console.log("Error: ", error);
   }
 };
+
+module.exports = { seedBooksData };
