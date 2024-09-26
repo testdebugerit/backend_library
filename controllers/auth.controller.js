@@ -7,8 +7,8 @@ const { CreateError } = require("../utils/error.js");
 const nodemailer = require("nodemailer");
 const UserToken = require("../models/UserToken.js");
 
-export const register = async (req, res, next) => {
-  const role = await Role.find({ role: "User" });
+exports.register = async (req, res, next) => {
+  const role = await Role.find({ role: "user" });
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(req.body.password, salt);
   const newUser = new User({
@@ -23,8 +23,8 @@ export const register = async (req, res, next) => {
   return res.status(200).json("User Registered Successfully!");
 };
 
-export const registerAdmin = async (req, res, next) => {
-  const role = await Role.find({});
+exports.registerAdmin = async (req, res, next) => {
+  const role = await Role.find({ role: "admin" });
   const salt = await bcrypt.genSalt(10);
   const hashPassword = await bcrypt.hash(req.body.password, salt);
   const newUser = new User({
@@ -40,7 +40,7 @@ export const registerAdmin = async (req, res, next) => {
   return res.status(200).send("Admin Registered Successfully!");
 };
 
-export const login = async (req, res, next) => {
+exports.login = async (req, res, next) => {
   try {
     const user = await User.findOne({ email: req.body.email }).populate(
       "roles",
@@ -73,7 +73,7 @@ export const login = async (req, res, next) => {
   }
 };
 
-export const sendEmail = async (req, res, next) => {
+exports.sendEmail = async (req, res, next) => {
   const email = req.body.email;
   const user = await User.findOne({
     email: { $regex: "^" + email + "$", $options: "i" },
@@ -136,7 +136,7 @@ export const sendEmail = async (req, res, next) => {
   });
 };
 
-export const resetPassword = (req, res, next) => {
+exports.resetPassword = (req, res, next) => {
   const token = req.body.token;
   const newPassword = req.body.password;
 
