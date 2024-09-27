@@ -1,4 +1,4 @@
-// const Role = require("../models/Role.js");
+const Role = require("../models/Role.js");
 const User = require("../models/User.js");
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
@@ -19,7 +19,9 @@ exports.register = async (req, res, next) => {
     password: hashPassword,
     roles: role,
   });
-  await newUser.save();
+  const savedUser = await newUser.save();
+  console.log(savedUser);
+
   return res.status(200).json("User Registered Successfully!");
 };
 
