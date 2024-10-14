@@ -35,6 +35,15 @@ const UserSchema = new Schema(
       required: true,
       ref: "Role",
     },
+    cart: [
+      {
+        bookId: {
+          type: mongoose.Schema.Types.ObjectId,
+          ref: "Book", // Reference to the Book model
+        },
+        quantity: { type: Number, default: 1 },
+      },
+    ],
   },
   { timestamps: true }
 );

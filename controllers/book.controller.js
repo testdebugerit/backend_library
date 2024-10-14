@@ -1,11 +1,15 @@
 const Book = require("../models/Book.js");
 const { CreateError } = require("../utils/error.js");
-const { CreateSuccess } = require("../utils/success.js");
 
 exports.getBooks = async (req, res, next) => {
   try {
     const books = await Book.find();
-    return next(CreateSuccess(200, "All Books Fetched", books));
+    return res.status(200).json({
+      success: true,
+      status: 200,
+      message: "All Books Fetched",
+      data: books,
+    });
   } catch (error) {
     return next(CreateError(500, "Internal Server Error!"));
   }
